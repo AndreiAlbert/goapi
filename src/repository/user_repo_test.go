@@ -97,32 +97,23 @@ func TestRepo(t *testing.T) {
 		Password: "testpassword",
 	}
 	returnedUser, err := repo.Register(&testUser)
-    copyPassword := strings.Clone(returnedUser.Username)
-    assert.Equal(t, returnedUser.Username, testUser.Username, "Names don't match'") 
-    assert.Equal(t, returnedUser.Email, testUser.Email, "Emails don't match'") 
-    assert.Assert(t, strings.Compare(copyPassword, testUser.Password) != 0 ,"Password should not be stored directly. They should be hashed")
-        
-    testLogin := models.LoginRequest{
-        Password: "testpassword",
-        Email: "test@gmail.com",
-    } 
-    testLoginResponse, err := repo.Login(&testLogin)
-    assert.Equal(t, nil, err, "The login should work")
-    assert.Equal(t, testLoginResponse.Email, testLogin.Email, "matchy emails")
+	copyPassword := strings.Clone(returnedUser.Username)
+	assert.Equal(t, returnedUser.Username, testUser.Username, "Names don't match'")
+	assert.Equal(t, returnedUser.Email, testUser.Email, "Emails don't match'")
+	assert.Assert(t, strings.Compare(copyPassword, testUser.Password) != 0, "Password should not be stored directly. They should be hashed")
 
-    testLoginFailOnPassword := models.LoginRequest {
-        Password: "fail",
-        Email: "test@gmail.com",
-    }
-    _, err = repo.Login(&testLoginFailOnPassword)
-    assert.Assert(t, err != nil, "this should return an error")
+	testLogin := models.LoginRequest{
+		Password: "testpassword",
+		Email:    "test@gmail.com",
+	}
+	testLoginResponse, err := repo.Login(&testLogin)
+	assert.Equal(t, nil, err, "The login should work")
+	assert.Equal(t, testLoginResponse.Email, testLogin.Email, "matchy emails")
+
+	testLoginFailOnPassword := models.LoginRequest{
+		Password: "fail",
+		Email:    "test@gmail.com",
+	}
+	_, err = repo.Login(&testLoginFailOnPassword)
+	assert.Assert(t, err != nil, "this should return an error")
 }
-
-
-
-
-
-
-
-
-
