@@ -8,7 +8,7 @@ type UserEntity struct {
 	gorm.Model
 	Username string `gorm:"column: username;unique;not null" json:"username"`
 	Email    string `gorm:"column:email; unique; not null" json:"email"`
-    Password string `gorm:"column: password; not null" json:"-"`
+    Password string `gorm:"column: password; not null" json:"password"`
 }
 
 type LoginRequest struct {

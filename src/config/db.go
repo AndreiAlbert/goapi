@@ -27,6 +27,7 @@ func loadEnvDb() DbConfig {
 	dbPassword := os.Getenv("DB_PASSWORD")
 	dbName := os.Getenv("DB_NAME")
 	dbPort := os.Getenv("DB_PORT")
+	// uses a sensible default on windows (tcp/http) and linux/osx (socket)
 	dbHost := os.Getenv("DB_HOST")
 	fmt.Printf("%s\t%s\t%s\t%s\t%s\n", dbUser, dbPassword, dbName, dbPort, dbHost)
 	return DbConfig{

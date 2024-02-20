@@ -1,7 +1,6 @@
 package repository
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/AndreiAlbert/tuit/src/models"
@@ -48,7 +47,7 @@ func (r *userRepository) FindAll() ([]models.UserEntity, error) {
 func (r *userRepository) Register(user *models.UserEntity) (models.UserEntity, error) {
     hashedPass, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
     if err != nil {
-        return *user, nil
+        return *user, err
     }
     user.Password = string(hashedPass)
 	if err := r.db.Create(user).Error; err != nil {
@@ -62,8 +61,6 @@ func (r *userRepository) Login(loginData *models.LoginRequest) (models.LoginResp
     if err := r.db.Where("email = ?", loginData.Email).First(&user).Error; err != nil {
         return models.LoginResponse{}, err
     }
-    fmt.Printf("%s\n", user.Password) 
-    fmt.Printf("%s\n", loginData.Password)
     if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(loginData.Password)); err != nil {
         return models.LoginResponse{}, err
     }
