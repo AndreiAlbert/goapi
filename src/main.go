@@ -12,6 +12,7 @@ import (
 )
 
 func main() {
+    print("hei")
 	db := config.ConnectDB()
 	if err := db.AutoMigrate(&models.UserEntity{}); err != nil {
 		log.Fatal(err.Error())
